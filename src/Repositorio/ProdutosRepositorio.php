@@ -58,7 +58,7 @@ class ProdutosRepositorio
     }
 
     // Método para consultar todos os produtos e retorna um array objeto de todos produtos.
-    public function buscarTodosProduto()
+    public function buscarTodosProdutos()
     {
         $sql = "SELECT * FROM produtos ORDER BY preco";
         $stmt = $this->conexao->query($sql);
@@ -72,5 +72,15 @@ class ProdutosRepositorio
         );
 
         return $todosOsDados;
+    }
+
+    // Método para excluir produto.
+    public function deletar(INT $id)
+    {
+        $sql = "DELETE FROM produtos WHERE id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        // Mandando como parâmetro para variável sql o ID do produto para exclusão.
+        $stmt->bindValue(1, $id);
+        return $stmt->execute();
     }
 }

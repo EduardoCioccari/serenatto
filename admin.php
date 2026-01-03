@@ -5,7 +5,7 @@ require "src/Modelos/Produto.php";
 require "src/Repositorio/ProdutosRepositorio.php";
 
 $produtosRepositorio = new ProdutosRepositorio($conexao);
-$produtos = $produtosRepositorio->buscarTodosProduto();
+$produtos = $produtosRepositorio->buscarTodosProdutos();
 ?>
 
 <!doctype html>
@@ -56,8 +56,10 @@ $produtos = $produtosRepositorio->buscarTodosProduto();
               <td><?php echo $produto->getPrecoFormatado() ?></td>
               <td><a class="botao-editar" href="editar-produto.html">Editar</a></td>
               <td>
-                <form>
-                  <input type="button" class="botao-excluir" value="Excluir">
+                <form action="excluir-produto.php" method="post">
+                  <!-- hidden para fazer query params -->
+                  <input type="hidden" name="id" value="<?php echo $produto->getId() ?>">
+                  <input type="submit" class="botao-excluir" value="Excluir">
                 </form>
               </td>
             <?php } ?>
