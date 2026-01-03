@@ -9,6 +9,7 @@ class ProdutosRepositorio
         $this->conexao = $conexao;
     }
 
+    // Método para criar objeto produto a partir da class Produto.
     public function formarObjeto($dados)
     {
         return new Produto(
@@ -21,6 +22,7 @@ class ProdutosRepositorio
         );
     }
 
+    // Método para consultar categoria café e retorna um array objeto dos cafés
     public function opcoesCafe(): array
     {
 
@@ -38,6 +40,7 @@ class ProdutosRepositorio
         return $dadosCafe;
     }
 
+    // Método para consultar categoria almoço e retorna um array objeto dos almoços.
     public function opcoesAlmoco(): array
     {
         $sqlAlmoco = "SELECT * FROM produtos WHERE tipo = 'Almoco' ORDER BY preco";
@@ -52,5 +55,22 @@ class ProdutosRepositorio
         );
 
         return $dadosAlmoco;
+    }
+
+    // Método para consultar todos os produtos e retorna um array objeto de todos produtos.
+    public function buscarTodosProduto()
+    {
+        $sql = "SELECT * FROM produtos ORDER BY preco";
+        $stmt = $this->conexao->query($sql);
+        $dados = $stmt->fetchAll(pdo::FETCH_ASSOC);
+
+        $todosOsDados = array_map(
+            function ($produto) {
+                return $this->formarObjeto($produto);
+            },
+            $dados
+        );
+
+        return $todosOsDados;
     }
 }
