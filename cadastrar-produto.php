@@ -13,6 +13,13 @@ if (isset($_POST["cadastro"])) {
         $_POST["preco"],
         $_POST["imagem"] // Opcional, já tem valor padrão.
     );
+
+    // Salvando no banco de dados o cadastro.
+    $produtoRepositorio = new ProdutosRepositorio($conexao);
+    $produtoRepositorio->salvar($produto);
+
+    // Redirecionando para index.
+    header("Location: admin.php");
 }
 
 ?>

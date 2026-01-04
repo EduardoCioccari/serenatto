@@ -17,8 +17,8 @@ class ProdutosRepositorio
             $dados["tipo"],
             $dados["nome"],
             $dados["descricao"],
-            $dados["imagem"],
             $dados["preco"],
+            $dados["imagem"],
         );
     }
 
@@ -82,5 +82,18 @@ class ProdutosRepositorio
         // Mandando como parâmetro para variável sql o ID do produto para exclusão.
         $stmt->bindValue(1, $id);
         return $stmt->execute();
+    }
+
+    // Método para salvar cadastro no banco de dados.
+    public function salvar(Produto $produto)
+    {
+        $sql = "INSERT INTO produtos (tipo, nome, descricao, preco, imagem) VALUES (?, ?, ?, ?, ?)"; // Vou passar os dados depois do prepare.
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $produto->getTipo());
+        $stmt->bindValue(2, $produto->getNome());
+        $stmt->bindValue(3, $produto->getDescricao());
+        $stmt->bindValue(4, $produto->getPreco());
+        $stmt->bindValue(5, $produto->getImagem());
+        $stmt->execute();
     }
 }
