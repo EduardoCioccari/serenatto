@@ -54,7 +54,7 @@ $produtos = $produtosRepositorio->buscarTodosProdutos();
               <td><?php echo $produto->getTipo() ?></td>
               <td><?php echo $produto->getDescricao() ?></td>
               <td><?php echo $produto->getPrecoFormatado() ?></td>
-              <td><a class="botao-editar" href="editar-produto.html">Editar</a></td>
+              <td><a class="botao-editar" href="editar-produto.php?id=<?php echo $produto->getId() ?>">Editar</a></td>
               <td>
                 <form action="excluir-produto.php" method="post">
                   <!-- hidden para fazer query params -->
