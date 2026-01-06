@@ -39,6 +39,11 @@ class Produto
         return $this->descricao;
     }
 
+    public function setImagem(string $imagem): void
+    {
+        $this->imagem = $imagem;
+    }
+
     public function getImagem(): string
     {
         return $this->imagem;
