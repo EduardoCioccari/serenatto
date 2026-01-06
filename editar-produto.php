@@ -13,11 +13,15 @@ if (isset($_POST["editar"])) {
     $_POST["nome"],
     $_POST["descricao"],
     $_POST["preco"],
-    $_POST["imagem"],
   );
 
-  $produtosRepositorio->atualizar($produto); // Atualizando dados do cadastro no banco de dados.
+  // Fluxo para salvar a imagem.
+  if (isset($_FILES["imagem"])) {
+    $produto->setImagem(uniqid() . $_FILES["imagem"]["name"]); // Chamando método da imagem do objeto para mandar os dados juntos + novo nome para imagem.
+    move_uploaded_file($_FILES["imagem"]["tmp_name"], $produto->getImagemDiretorio()); // Movendo arquivo do local temporário para o caminho de imagens do projeto.
+  }
 
+  $produtosRepositorio->atualizar($produto); // Atualizando dados do cadastro no banco de dados.
   header("Location: admin.php"); // Direcionando após atualização dos dados no banco.
 } else {
   $produto = $produtosRepositorio->buscar($_GET["id"]); // Se não tiver o name do button, pego o ID.
@@ -53,7 +57,7 @@ if (isset($_POST["editar"])) {
     </section>
     <section class="container-form">
 
-      <form method="post">
+      <form method="post" enctype="multipart/form-data"> <!-- enctype.. é para o form aceitar + do que textos. Neste caso, quero enviar imagem -->
         <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" value="<?php echo $produto->getNome() ?>" required>
 
