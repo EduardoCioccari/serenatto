@@ -119,8 +119,22 @@ class ProdutosRepositorio
         $stmt->bindValue(2, $produto->getNome());
         $stmt->bindValue(3, $produto->getDescricao());
         $stmt->bindValue(4, $produto->getPreco());
-        $stmt->bindValue(5, $produto->getImagem());
-        $stmt->bindValue(6, $produto->getId());
+        $stmt->bindValue(5, $produto->getId());
         $stmt->execute();
+
+        // Só atualizará o valor da img no banco se for diferente do que defini como padrão.
+        if($produto->getImagem() !== 'logo-serenatto.png'){  
+            $this->atualizarFoto($produto);
+        }
+    }
+
+    // Método usado no if para imagem no método atualizar.
+    private function atualizarFoto(Produto $produto)
+    {
+        $sql = "UPDATE produtos SET imagem = ? WHERE id = ?";
+        $statement = $this->conexao->prepare($sql);
+        $statement->bindValue(1, $produto->getImagem());
+        $statement->bindValue(2, $produto->getId());
+        $statement->execute();
     }
 }

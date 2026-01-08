@@ -16,7 +16,7 @@ if (isset($_POST["editar"])) {
   );
 
   // Fluxo para salvar a imagem.
-  if (isset($_FILES["imagem"])) {
+  if ($_FILES['imagem']['error'] == UPLOAD_ERR_OK) {
     $produto->setImagem(uniqid() . $_FILES["imagem"]["name"]); // Chamando método da imagem do objeto para mandar os dados juntos + novo nome para imagem.
     move_uploaded_file($_FILES["imagem"]["tmp_name"], $produto->getImagemDiretorio()); // Movendo arquivo do local temporário para o caminho de imagens do projeto.
   }
